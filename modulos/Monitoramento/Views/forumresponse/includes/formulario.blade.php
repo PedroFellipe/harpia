@@ -199,7 +199,6 @@
                 }
                 if (grupoatual != objeto.groupid) {
                     grupoatual = objeto.groupid;
-
                 }
                 html += '<div class="row"><div class="col-md-12">';
                 html += '<div class="box">';

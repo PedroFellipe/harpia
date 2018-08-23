@@ -25,6 +25,38 @@
         </div>
         <div class="text-center margin" id="grafico"></div>
     </div>
+
+    <!-- <div class="table-dados" style = "display:none">sadsadasdas</div> -->
+
+    <div class="box box-primary" id = "tabela-semanas" style = "display:none">
+        <div class="box-header with-border">
+            <h3 class="box-title">Relatório de acesso semanal</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body" id = "dados-tabela-semana">
+        </div>
+        <div class="botao">
+          {!! ActionButton::grid([
+            'type' => 'LINE',
+            'buttons' =>
+            [
+              [
+                'classButton' => 'btn btn-success pull-right',
+                'icon' => 'fa fa-file-pdf-o',
+                'route' => 'monitoramento.tempoonline.print',
+                'id' => 'algo',
+                'label' => 'Relatório',
+                'method' => 'post',
+                'attributes' => [
+                  'target' => '_blank'
+                  ],
+              ],
+            ]])!!}
+          </div>
+    </div>
 @stop
 
 @section('scripts')

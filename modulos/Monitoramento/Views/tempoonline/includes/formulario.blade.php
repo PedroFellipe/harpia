@@ -199,15 +199,15 @@
 
             var dias = new Array();
             var tempos = new Array();
-            var parada = new Array();
+            var items = new Array();
 
             for (var i = 0; i < dadosgrafico.length; i++) {
 
-                parada = dadosgrafico[i].items;
+                items = dadosgrafico[i].items;
 
-                for (var j = 0; j < parada.length; j++) {
-                    dias[j] = parada[j].date.replace(/-/g, "\/");
-                    tempos[j] = parada[j].onlinetime;
+                for (var j = 0; j < items.length; j++) {
+                    dias[j] = items[j].date.replace(/-/g, "\/");
+                    tempos[j] = items[j].onlinetime;
                 }
 
                 dataset = {
@@ -217,7 +217,6 @@
                     backgroundColor: 'rgba(255, ' + Math.floor((Math.random() * 255) + 1) + ', ' + Math.floor((Math.random() * 255) + 1) + ', .6)'
                 }
                 tempos = [];
-
                 dadosDatasets.push(dataset);
             }
 
@@ -287,17 +286,83 @@
                         //         }
                         //     },
                         // },
+                    },
+                    bezierCurve : false,
+
+                    animation : {
+                        onComplete : function(){
+                            done();
+                        }
                     }
+
                 }
             };
 
             // get line chart canvas
             var monitoramento = document.getElementById('grafico-tempo').getContext('2d');
             // draw line chart
+            linechart= new Chart(monitoramento, config);
 
-            new Chart(monitoramento, config);
+            var tabelaSemanas = document.getElementById("tabela-semanas");
+
+             tabelaSemanas.style.display = "block";
+             var html = '';
+             var weeks = [];
+             for (var i = 0; i < dadosgrafico.length; i++) {
+                 weeks = dadosgrafico[i].weeks;
+
+                   html += '<div class="row">';
+                   html += '<div class="col-md-12"><h3><strong><i class="fa fa-user margin-r-5"></i>'+dadosgrafico[i].fullname+'</strong></h3>';
+                   html += '</div>';
+                   html += '<div class="col-md-12">';
+
+                   html += '<table class="table table-bordered table-striped" style="width: 50%">';
+                   html += '<thead>';
+                   html += '<tr>';
+                   html += '<th>Período</th>';
+                   html += '<th>Tempo de acesso</th>';
+                   html += '</tr>';
+                   html += '</thead>';
+                   html += '<tbody>';
+                   for (var j = 0; j < weeks.length; j++) {
+                     html += '<tr>';
+                     html += '<td><strong>'+weeks[j].date_start+'</strong>'+ ' a ' +'<strong>'+weeks[j].date_end+ '</strong></td>';
+                     html += '<td><strong>'+weeks[j].onlinetime+'</strong></td>';
+                     html += '</tr>';
+                   }
+                   html += '<tr>';
+                   html += '<td><strong>Total</strong></td>';
+                   html += '<td><span class="badge bg-blue">'+dadosgrafico[i].total+'</span></td>';
+                   html += '</tr>';
+                   html += '</tbody>';
+                   html += '</table>';
+
+                   html += '</div>';
+                   html += '</div>';
+             }
+
+             var dadosTabela = $('#dados-tabela-semana');
+             dadosTabela.empty();
+             dadosTabela.append(html);
+
+             var cont = 0;
+             function done(){
+                var url=linechart.toBase64Image();
+                if(!cont){
+                  getPdf(url, dadosgrafico);
+                }
+                cont++;
+              }
+
+              var getPdf = function (url, dadosgrafico) {
+                var myJSON = JSON.stringify(dadosgrafico);
+                myJSON = "'"+ myJSON + "'";
+
+                $('.form-linebutton').append('<input type="hidden" name="url" value="'+url+'" />');
+                $('.form-linebutton').append('<input type="hidden" name="data" value='+myJSON+' />');
+                $('.form-linebutton').attr('target', '_blank');
+              }
+
         });
-
-
     </script>
 @stop

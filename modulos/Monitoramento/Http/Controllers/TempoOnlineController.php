@@ -2,6 +2,7 @@
 
 namespace Modulos\Monitoramento\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Configuracao;
 use App\Http\Controllers\Controller;
 use Modulos\Integracao\Models\AmbienteVirtual;
@@ -58,5 +59,23 @@ class TempoOnlineController extends Controller
         $wsfunction = 'local_monitor_get_tutor_online_time';
 
         return view('Monitoramento::tempoonline.monitorar', compact('cursos', 'ambiente', 'timeclicks', 'wsfunction', 'monitoramento'));
+    }
+
+    public function getPdf(Request $request)
+    {
+        $dados = $request->except('_token');
+//        dd($request);
+
+
+        $tabledata = json_decode($dados['data'], true);
+        // dd($tabledata);
+
+        $mpdf = new \mPDF();
+        $mpdf->mirrorMargins = 1;
+        $mpdf->SetTitle('Tempo Online');
+        $mpdf->addPage('P');
+        $mpdf->WriteHTML(view('Monitoramento::tempoonline.print', compact('dados', 'tabledata'))->render());
+        $mpdf->Output();
+        exit;
     }
 }
