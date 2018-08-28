@@ -208,13 +208,20 @@
                 html += '<div class="box-body no-padding">';
                 html += '<table class="table table-condensed">';
                 html += '<tr>';
-                html += '<th style="width: 50%">Discussão</th>';
-                html += '<th style="width: 15%">Participação ';
+                html += '<th style="width: 40%">Discussão</th>';
+                html += '<th style="width: 12%">Participação ';
                 html += '<a tabindex="0" class="badge bg-block" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Participação" data-content="Esta coluna contém a porcentagem total de respostas dos tutores em relação as todas as postagens dos alunos">?</a></th>';
                 html += '<th style="width: 15%">Respostas a posts ';
                 html += '<a tabindex="0" class="badge bg-block" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Respostas a posts" data-content="Esta coluna contém a porcentagem de respostas em relação aos posts dos alunos referentes a discussão no primeiro nível">?</a></th>';
                 html += '<th style="width: 15%">Tempo resposta ';
                 html += '<a tabindex="0" class="badge bg-block" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Tempo Médio de respostas" data-content="Esta coluna contém o tempo médio que o tutor demora para responder aos posts de primeiro nível">?</a></th>';
+
+                html += '<th style="width: 10%">Alunos';
+                html += '<a tabindex="0" class="badge bg-block" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Participação dos alunos" data-content="Quantidade de comentários que os alunos postaram na discussão do fórum">?</a></th>';
+
+                html += '<th style="width: 13%">Tutores';
+                html += '<a tabindex="0" class="badge bg-block" role="button" data-placement="top" data-toggle="popover" data-trigger="focus" title="Participação do tutor" data-content="Quantidade de comentários que o tutor postou na discussão do fórum">?</a></th>';
+
                 html += '</tr>';
                 $.each(moodledata.itens, function (key, obj) {
 
@@ -241,8 +248,10 @@
                         } else {
                             html += '<td><span class="badge bg-red">0%</span></td>';
                         }
+                        html += '<td><span class="badge bg-dark">' + obj.mediumresponsetime + '</span></td>';
+                        html += '<td><span class="badge bg-dark">' + obj.studentsposts + '</span></td>';
+                        html += '<td><span class="badge bg-dark">' + obj.tutorposts + '</span></td>';
 
-                        html += '<td><span class="badge bg-blue">' + obj.mediumresponsetime + '</span></td>';
                         html += '</tr>';
                     }
                 });

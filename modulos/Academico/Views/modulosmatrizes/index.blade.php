@@ -73,7 +73,7 @@
                                     @endforeach
                                 </td>
                             @else
-                                <td><p>Sem pré-requsitos</p></td>
+                                <td><p>Sem pré-requisitos</p></td>
                             @endif
                           </tr>
                         @endforeach

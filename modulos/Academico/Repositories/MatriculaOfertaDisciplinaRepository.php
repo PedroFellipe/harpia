@@ -337,6 +337,9 @@ class MatriculaOfertaDisciplinaRepository extends BaseRepository
                 // busca a oferta de disciplina
                 $oferta = $this->ofertaDisciplinaRepository->findAll(['ofd_mdc_id' => $req->mdc_id])->first();
 
+                if (!$oferta) {
+                  continue;
+                }
                 // busca a matricula do aluno nessa disciplina
                 $matriculaOferta = $this->findBy([
                     ['mof_mat_id', '=', $matriculaId],
