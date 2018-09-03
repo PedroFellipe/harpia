@@ -35,6 +35,7 @@ abstract class SincronizacaoFactory extends SincronizacaoEvent implements Sincro
 
         'MatriculaOfertaDisciplina' => [
             'local_integracao_enrol_student_discipline' => \Modulos\Academico\Events\CreateMatriculaDisciplinaEvent::class,
+            'local_integracao_unenrol_student_discipline' => \Modulos\Academico\Events\DeleteMatriculaDisciplinaEvent::class
         ],
 
         'TutorGrupo' => [

@@ -318,8 +318,10 @@ Route::group(['prefix' => 'academico', 'middleware' => ['auth']], function () {
         Route::group(['prefix' => 'matriculasofertasdisciplinas', 'middleware' => ['vinculo']], function () {
             Route::get('/gettableofertasdisciplinas/{one}/{two}/{three}', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@getTableOfertasDisciplinas')->name('academico.async.matriculasofertasdisciplinas.gettableofertasdisciplinas');
             Route::post('/matricular', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@postMatricularAlunoDisciplinas')->name('academico.async.matriculasofertasdisciplinas.matricular');
+            Route::post('/desmatricular', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@postDesmatricularAlunoDisciplinas')->name('academico.async.matriculasofertasdisciplinas.desmatricular');
             Route::get('/getalunosmatriculaslote', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@getFindAllAlunosMatriculasLote')->name('academico.async.matriculasofertasdisciplinas.getalunosmatriculaslote');
             Route::post('/matriculaslote', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@postMatriculasLote')->name('academico.async.matriculasofertasdisciplinas.matriculaslote');
+            Route::post('/desmatricularlote', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@postDesmatricularLote')->name('academico.async.matriculasofertasdisciplinas.desmatricularlote');
             Route::get('/gettallalunosbysituacao/{one}/{two}/{three}', '\Modulos\Academico\Http\Controllers\Async\MatriculaOfertaDisciplina@getRelatorio')->name('academico.async.matriculasofertasdisciplinas.gettallalunosbysituacao');
         });
 
