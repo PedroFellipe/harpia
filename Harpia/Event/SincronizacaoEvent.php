@@ -36,6 +36,7 @@ abstract class SincronizacaoEvent extends Event
         ],
         'acd_matriculas' => [
             'CREATE' => 'local_integracao_enrol_student',
+            'DELETE' => 'local_integracao_unenrol_student',
             'UPDATE_SITUACAO_MATRICULA' => 'local_integracao_change_role_student_course',
             'UPDATE_GRUPO_ALUNO' => 'local_integracao_change_student_group',
             'DELETE_GRUPO_ALUNO' => 'local_integracao_unenrol_student_group',

@@ -18,6 +18,11 @@ return [
         'Modulos\Academico\Listeners\CreateMatriculaTurmaListener'
     ],
 
+    'Modulos\Academico\Events\DeleteMatriculaTurmaEvent' => [
+        'Modulos\Integracao\Listeners\SincronizacaoListener' => 10,
+        'Modulos\Academico\Listeners\DeleteMatriculaTurmaListener'
+    ],
+
     'Modulos\Academico\Events\UpdateTurmaEvent' => [
         'Modulos\Integracao\Listeners\SincronizacaoListener' => 10,
         'Modulos\Academico\Listeners\UpdateTurmaListener'

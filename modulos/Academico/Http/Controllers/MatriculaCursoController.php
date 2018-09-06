@@ -206,4 +206,35 @@ class MatriculaCursoController extends BaseController
             'situacao' => $situacao
         ]);
     }
+
+    public function postDelete(Request $request)
+    {
+        try {
+            $data = $request->except('_token');
+            $matricula = $this->matriculaCursoRepository->find($data['id']);
+
+            if (!$matricula) {
+                flash()->error('Matricula não existe!');
+                return redirect()->route('academico.matricularalunocurso.index');
+            }
+
+            $matriculaDelete = $this->matriculaCursoRepository->deleteMatricula($data['id']);
+
+            if ($matriculaDelete['type'] == 'error'){
+                flash()->error($matriculaDelete['message']);
+                return redirect()->route('academico.matricularalunocurso.show', $matricula->mat_alu_id);
+            }
+
+            flash()->success($matriculaDelete['message']);
+            return redirect()->route('academico.matricularalunocurso.show', $matricula->mat_alu_id);
+
+        } catch (\Exception $e) {
+            if (config('app.debug')) {
+                throw $e;
+            }
+
+            flash()->error('Erro ao tentar atualizar. Caso o problema persista, entre em contato com o suporte.');
+            return redirect()->back();
+        }
+    }
 }

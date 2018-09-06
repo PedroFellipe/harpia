@@ -164,6 +164,7 @@ Route::group(['prefix' => 'academico', 'middleware' => ['auth']], function () {
         Route::post('/create/{id}', '\Modulos\Academico\Http\Controllers\MatriculaCursoController@postCreate')->name('academico.matricularalunocurso.create');
         Route::put('/edit/{id}', '\Modulos\Academico\Http\Controllers\MatriculaCursoController@putEdit')->name('academico.matricularalunocurso.edit');
         Route::get('/show/{id}', '\Modulos\Academico\Http\Controllers\MatriculaCursoController@getShow')->name('academico.matricularalunocurso.show');
+        Route::post('/delete', '\Modulos\Academico\Http\Controllers\MatriculaCursoController@postDelete')->name('academico.matricularalunocurso.delete');
     });
 
     Route::group(['prefix' => 'matricularalunodisciplina'], function () {

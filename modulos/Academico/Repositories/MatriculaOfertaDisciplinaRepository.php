@@ -418,8 +418,8 @@ class MatriculaOfertaDisciplinaRepository extends BaseRepository
                         ->where('mof_mat_id', '=', $data['mat_id'])
                         ->first();
 
-        if (!($matricula->mof_nota1 || $matricula->mof_nota2 || $matricula->mof_nota3 || $matricula->mof_conceito || $matricula->mof_recuperacao || $matricula->mof_final || $matricula->mof_mediafinal)){
-            $matricula->status = 1;
+        if ($matricula->mof_nota1 || $matricula->mof_nota2 || $matricula->mof_nota3 || $matricula->mof_conceito || $matricula->mof_recuperacao || $matricula->mof_final || $matricula->mof_mediafinal){
+            return array("type" => "error", "message" => "Aluno já tem notas lançadas no sistema");
         }
 
         if (!$matricula) {
@@ -427,7 +427,9 @@ class MatriculaOfertaDisciplinaRepository extends BaseRepository
         }
 
         $matricula = $this->find($matricula->mof_id);
+
         $this->delete($matricula->mof_id);
+
         return array('type' => 'success', 'message' => 'Aluno matriculado com sucesso!', 'obj' => $matricula);
     }
 

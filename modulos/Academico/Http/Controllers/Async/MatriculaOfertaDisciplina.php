@@ -118,24 +118,22 @@ class MatriculaOfertaDisciplina extends BaseController
                 $matriculasCollection[] = $result['obj'];
             }
 
-            DB::commit();
-
             // verifica se a turma dos alunos é integrada
             $matriculaCurso = $this->matriculaCursoRepository->find($matriculas[0]);
             $turma = $matriculaCurso->turma;
 
             $ambiente = $this->ambienteRepository->getAmbienteByTurma($turma->trm_id);
 
-            if (!$ambiente) {
-                return new JsonResponse('Turma não vinculada a um Ambiente Virtual!', 200);
-            }
-
             if ($turma->trm_integrada) {
+                if (!$ambiente) {
+                  return new JsonResponse('Turma não vinculada a um Ambiente Virtual!', 200);
+                }
+                DB::commit();
                 if (!empty($matriculasCollection)) {
                     event(new DeleteMatriculaDisciplinaLoteEvent($matriculasCollection, "DELETE", $ambiente->amb_id));
                 }
             }
-
+            DB::commit();
             return new JsonResponse('Alunos desmatriculados com sucesso!', 200);
         } catch (\Exception $e) {
             DB::rollBack();
