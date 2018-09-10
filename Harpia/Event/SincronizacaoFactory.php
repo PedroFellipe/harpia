@@ -28,6 +28,7 @@ abstract class SincronizacaoFactory extends SincronizacaoEvent implements Sincro
 
         'Matricula' => [
             'local_integracao_enrol_student' => \Modulos\Academico\Events\CreateMatriculaTurmaEvent::class,
+            'local_integracao_unenrol_student' => \Modulos\Academico\Events\DeleteMatriculaTurmaEvent::class,
             'local_integracao_change_role_student_course' => \Modulos\Academico\Events\UpdateSituacaoMatriculaEvent::class,
             'local_integracao_change_student_group' => \Modulos\Academico\Events\UpdateGrupoAlunoEvent::class,
             'local_integracao_unenrol_student_group' => \Modulos\Academico\Events\DeleteGrupoAlunoEvent::class,
