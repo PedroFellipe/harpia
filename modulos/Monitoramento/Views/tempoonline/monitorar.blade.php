@@ -38,7 +38,7 @@
         </div>
         <div class="box-body" id = "dados-tabela-semana">
         </div>
-        <div class="botao">
+        <div class="box-body">
           {!! ActionButton::grid([
             'type' => 'LINE',
             'buttons' =>
