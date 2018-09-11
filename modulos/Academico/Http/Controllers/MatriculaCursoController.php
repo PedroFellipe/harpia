@@ -3,17 +3,17 @@
 namespace Modulos\Academico\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modulos\Core\Http\Controller\BaseController;
+use Modulos\Academico\Repositories\TurmaRepository;
 use Modulos\Academico\Events\UpdateGrupoAlunoEvent;
-use Modulos\Academico\Events\UpdateMatriculaCursoEvent;
 use Modulos\Academico\Events\DeleteGrupoAlunoEvent;
-use Modulos\Academico\Events\CreateMatriculaTurmaEvent;
-use Modulos\Academico\Http\Requests\MatriculaCursoRequest;
-use Modulos\Academico\Listeners\UpdateMatriculaCursoListener;
 use Modulos\Academico\Repositories\AlunoRepository;
 use Modulos\Academico\Repositories\CursoRepository;
+use Modulos\Academico\Events\DeleteMatriculaTurmaEvent;
+use Modulos\Academico\Events\UpdateMatriculaCursoEvent;
+use Modulos\Academico\Events\CreateMatriculaTurmaEvent;
+use Modulos\Academico\Http\Requests\MatriculaCursoRequest;
 use Modulos\Academico\Repositories\MatriculaCursoRepository;
-use Modulos\Academico\Repositories\TurmaRepository;
-use Modulos\Core\Http\Controller\BaseController;
 use Modulos\Seguranca\Providers\ActionButton\Facades\ActionButton;
 
 class MatriculaCursoController extends BaseController
@@ -225,9 +225,23 @@ class MatriculaCursoController extends BaseController
                 return redirect()->route('academico.matricularalunocurso.show', $matricula->mat_alu_id);
             }
 
+            $turma = $matricula->turma;
+            if ($turma->trm_integrada) {
+
+                $ambiente = $this->ambienteRepository->getAmbienteByTurma($turma->trm_id);
+                if (!$ambiente) {
+                    return array(
+                        'type' => 'error',
+                        'message' => 'Esta turma é integrada, porém não está vinculada a um ambiente virtual!',
+                    );
+                }
+
+                event(new DeleteMatriculaTurmaEvent($matricula, $ambiente->amb_id));
+            }
+
             flash()->success($matriculaDelete['message']);
             return redirect()->route('academico.matricularalunocurso.show', $matricula->mat_alu_id);
-
+            
         } catch (\Exception $e) {
             if (config('app.debug')) {
                 throw $e;

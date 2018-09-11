@@ -9,7 +9,6 @@ use Modulos\Academico\Models\Matricula;
 use Modulos\Core\Repository\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
-use Modulos\Academico\Events\DeleteMatriculaTurmaEvent;
 use Modulos\Integracao\Repositories\AmbienteVirtualRepository;
 
 class MatriculaCursoRepository extends BaseRepository
@@ -312,10 +311,7 @@ class MatriculaCursoRepository extends BaseRepository
 
     public function deleteMatricula($matriculaId)
     {
-
-
         try {
-
             $matricula = $this->model->find($matriculaId);
             if (!$matricula) {
                 return array(
@@ -338,22 +334,6 @@ class MatriculaCursoRepository extends BaseRepository
 
             $this->delete($matricula->mat_id);
 
-            $turma = $matricula->turma;
-
-            if ($turma->trm_integrada) {
-
-                $ambiente = $this->ambienteRepository->getAmbienteByTurma($turma->trm_id);
-                if (!$ambiente) {
-                  return array(
-                      'type' => 'error',
-                      'message' => 'Esta turma é integrada não está vinculada a um ambiente virtual!',
-                  );
-                }
-
-                DB::commit();
-
-                event(new DeleteMatriculaTurmaEvent($matricula, $ambiente->amb_id));
-            }
             DB::commit();
 
             return array(
