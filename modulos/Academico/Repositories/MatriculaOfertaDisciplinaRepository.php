@@ -412,7 +412,7 @@ class MatriculaOfertaDisciplinaRepository extends BaseRepository
 
     public function deleteMatricula(array $data)
     {
-        // verifica se o aluno ainda está cursando a discipli
+        // verifica se o aluno ainda está cursando a disciplima
         $matricula = DB::table('acd_matriculas_ofertas_disciplinas')
                         ->where('mof_ofd_id', '=', $data['ofd_id'])
                         ->where('mof_mat_id', '=', $data['mat_id'])
@@ -476,7 +476,7 @@ class MatriculaOfertaDisciplinaRepository extends BaseRepository
 
                 if ($matriculaDisciplina->mof_situacao_matricula == 'cursando') {
 
-                    if (!$matriculaDisciplina->mof_nota1 && !$matriculaDisciplina->mof_nota2 && !$matriculaDisciplina->mof_nota3 && !$matriculaDisciplina->mof_mediafinal) {
+                    if ($matricula->mof_nota1 || $matricula->mof_nota2 || $matricula->mof_nota3 || $matricula->mof_conceito || $matricula->mof_recuperacao || $matricula->mof_final || $matricula->mof_mediafinal) {
                         $matricula->status = 'apto';
                     }
 
